@@ -1,0 +1,24 @@
+package com.juliosburger.domain.audit
+
+/**
+ * Acciones oficiales que pueden registrarse en el Audit Log.
+ */
+enum class AuditAction {
+    ORDER_CREATED,
+    ORDER_UPDATED,
+    ORDER_CONFIRMED,
+    ORDER_CANCELLED,
+    MENU_UPDATED,
+    PROMOTION_CREATED,
+    PROMOTION_UPDATED,
+    PROMOTION_DISABLED,
+    BUSINESS_VOCABULARY_CREATED,
+    BUSINESS_VOCABULARY_UPDATED,
+    BUSINESS_VOCABULARY_DISABLED,
+    CUSTOMER_MEMORY_UPDATED,
+    SESSION_CREATED,
+    SESSION_EXPIRED,
+    CONFIGURATION_UPDATED,
+    SYSTEM_EVENT,
+    OTHER
+}
