@@ -2,10 +2,12 @@
 
 **Proyecto:** Julio's Burger  
 **Documento:** TECHNOLOGY_BASELINE.md  
-**Versión:** 1.0.0  
-**Estado:** Candidato a base oficial  
+**Versión:** 1.1.0  
+**Estado:** Base oficial actualizada  
 **Autoría:** Arquitectura de Software  
 **Aprobación requerida:** Arquitecto Principal / Tech Lead  
+
+> Actualización de versión 1.0.0 → 1.1.0 para reflejar el stack tecnológico efectivamente compilado en el proyecto tras la activación de Room/KSP.
 
 ---
 
@@ -36,29 +38,30 @@ Toda modificación futura sobre versiones, dependencias, plugins o configuració
 
 | Componente | Versión oficial | Motivo de la elección | Compatibilidad |
 |------------|-----------------|----------------------|----------------|
-| **Android Studio** | Jellyfish / 2024.3.1+ | Versión estable actual con soporte AGP 9.3.1 | AGP 9.3.1, Kotlin 1.9.22, Compose 2024.06.00 |
-| **Gradle** | 8.9 | Última versión estable de la línea 8.x, soportada oficialmente por AGP 9.3.1 | AGP 9.3.1, KSP 1.9.22-1.0.22 |
-| **Android Gradle Plugin (AGP)** | 9.3.1 | Versión LTS actual, madura y con soporte extendido | Gradle 8.5+, Kotlin 1.9.22, compileSdk 36 |
-| **Kotlin** | 1.9.22 | Versión bundled con AGP 9.3.1, sin necesidad de alineación manual | AGP 9.3.1, KSP 1.9.22-1.0.22 |
-| **Java** | 11 | LTS vigente, soportada por Android y librerías empresariales | AGP 9.3.1, Room 2.6.1, Hilt 2.51.1 |
+| **Android Studio** | Jellyfish / 2024.3.1+ | Versión estable actual con soporte AGP 8.6.0 | AGP 8.6.0, Kotlin 1.9.22, Compose 2024.06.00 |
+| **Gradle** | 8.11.1 | Versión estable de la línea 8.x, alineada con AGP 8.6.0 | AGP 8.6.0, KSP 1.9.22-1.0.18 |
+| **Android Gradle Plugin (AGP)** | 8.6.0 | Versión estable actual, madura y con soporte extendido | Gradle 8.11.1, Kotlin 1.9.22, compileSdk 34 |
+| **Kotlin** | 1.9.22 | Versión bundled con AGP 8.6.0, alineada con KSP 1.9.x | AGP 8.6.0, KSP 1.9.22-1.0.18 |
+| **Java** | 21 | LTS vigente, soportada por AGP 8.6.0 y librerías empresariales | AGP 8.6.0, Room 2.6.1, Hilt 2.51.1 |
+| **Desugar JDK** | 2.0.4 | Core library desugaring para compatibilidad con APIs Java 21 en minSdk 24 | AGP 8.6.0, Java 21, minSdk 24 |
 
 ### 3.2 Procesadores de anotaciones
 
 | Componente | Versión oficial | Motivo de la elección | Compatibilidad |
 |------------|-----------------|----------------------|----------------|
-| **KSP** | 1.9.22-1.0.22 | Procesador oficial para Kotlin 1.9.x, reemplaza Kapt en AGP 9.x | Kotlin 1.9.22, Room 2.6.1, Hilt 2.51.1 |
-| **Hilt** | 2.51.1 | Inyección de dependencias estándar en Android, soporte nativo KSP | AGP 9.3.1, KSP 1.9.22-1.0.22 |
-| **Room** | 2.6.1 | Persistencia oficial Android, arquitectura probada | AGP 9.3.1, KSP 1.9.22-1.0.22 |
+| **KSP** | 1.9.22-1.0.18 | Procesador oficial para Kotlin 1.9.x, reemplaza Kapt en AGP 8.x | Kotlin 1.9.22, Room 2.6.1, Hilt 2.51.1 |
+| **Hilt** | 2.51.1 | Inyección de dependencias estándar en Android, soporte nativo KSP | AGP 8.6.0, KSP 1.9.22-1.0.18 |
+| **Room** | 2.6.1 | Persistencia oficial Android, arquitectura probada | AGP 8.6.0, KSP 1.9.22-1.0.18 |
 
 ### 3.3 Interfaz de usuario
 
 | Componente | Versión oficial | Motivo de la elección | Compatibilidad |
 |------------|-----------------|----------------------|----------------|
-| **Jetpack Compose** | BOM 2024.06.00 | Bill of Materials oficial, alineación garantizada de versiones | AGP 9.3.1, Kotlin 1.9.22, compileSdk 36 |
+| **Jetpack Compose** | BOM 2024.06.00 | Bill of Materials oficial, alineación garantizada de versiones | AGP 8.6.0, Kotlin 1.9.22, compileSdk 34 |
 | **Navigation Compose** | 2.8.0 (dentro del BOM) | Navegación declarativa oficial para Compose | Compose BOM 2024.06.00 |
 | **Material 3** | 1.12.0 | Diseño system moderno, soporte Material You | Compose BOM 2024.06.00 |
-| **Core KTX** | 1.13.1 | Extensiones Kotlin para AndroidX, estabilidad probada | AGP 9.3.1, compileSdk 36 |
-| **AppCompat** | 1.7.0 | Compatibilidad hacia atrás para componentes legacy | AGP 9.3.1, minSdk 24 |
+| **Core KTX** | 1.13.1 | Extensiones Kotlin para AndroidX, estabilidad probada | AGP 8.6.0, compileSdk 34 |
+| **AppCompat** | 1.7.0 | Compatibilidad hacia atrás para componentes legacy | AGP 8.6.0, minSdk 24 |
 
 ### 3.4 Concurrencia y red
 
@@ -73,8 +76,8 @@ Toda modificación futura sobre versiones, dependencias, plugins o configuració
 
 | Componente | Versión oficial | Motivo de la elección | Compatibilidad |
 |------------|-----------------|----------------------|----------------|
-| **JUnit** | 4.13.2 | Estabilidad absoluta en proyectos Android existentes | AGP 9.3.1, Java 11 |
-| **Espresso** | 3.5.1 | Pruebas instrumentadas oficiales | AGP 9.3.1, compileSdk 36 |
+| **JUnit** | 4.13.2 | Estabilidad absoluta en proyectos Android existentes | AGP 8.6.0, Java 21 |
+| **Espresso** | 3.5.1 | Pruebas instrumentadas oficiales | AGP 8.6.0, compileSdk 34 |
 | **JUnit AndroidX** | 1.1.5 | Extensión para pruebas instrumentadas | Espresso 3.5.1 |
 
 ---
@@ -132,7 +135,7 @@ Toda modificación futura sobre versiones, dependencias, plugins o configuració
 
 ### 5.8 KSP Configuration
 - `ksp.useKSP2=false` en `gradle.properties`.
-- **Obligatorio** para mantener compatibilidad con Kotlin 1.9.22 y KSP 1.9.22-1.0.22.
+- **Obligatorio** para mantener compatibilidad con Kotlin 1.9.22 y KSP 1.9.22-1.0.18.
 
 ---
 
@@ -210,6 +213,17 @@ Antes de proponer cualquier actualización tecnológica, verificar:
 - [ ] Se actualizó `gradle/libs.versions.toml` exclusivamente.
 - [ ] Se actualizó este documento antes de cualquier modificación.
 - [ ] El cambio fue aprobado por el Arquitecto Principal.
+
+---
+
+## 11. Decisiones de persistencia (Room)
+
+Las siguientes decisiones se tomaron durante la activación de Room sobre la capa Data:
+
+- **Foreign Keys:** Las relaciones de catálogo (`ProductEntity -> CategoryEntity`, `ModifierGroupEntity -> ProductEntity`, `ModifierOptionEntity -> ModifierGroupEntity`) utilizan `RESTRICT` en lugar de `CASCADE` para forzar revisión/confirmación humana antes de eliminar registros padre, alineándose con los principios de auditoría y supervisión humana del dominio. La relación `DraftOrderItemEntity -> DraftOrderEntity` mantiene `CASCADE` porque el ciclo de vida de los ítems está estrictamente ligado al pedido.
+- **Campos monetarios:** Las entidades `ProductEntity.basePrice` y `ModifierOptionEntity.priceAdjustment` usan `Double`. Se recomienda migrar a `Long` (centavos) en una fase posterior para evitar errores de precisión de punto flotante en cálculos financieros. No se migra en esta fase para no introducir cambios disruptivos sin RepositoryImpl/Mappers.
+- **Core Library Desugaring:** Se habilitó `coreLibraryDesugaringEnabled = true` y se agregó la dependencia `desugar-jdk` para resolver advertencias de lint por uso de APIs de Java 21 (`Instant.now`) en dominio con `minSdk = 24`.
+- **KSP:** Se mantiene `ksp.useKSP2=false` en `gradle.properties` para asegurar compatibilidad con Kotlin 1.9.22 y KSP 1.9.22-1.0.18.
 
 ---
 
