@@ -37,18 +37,27 @@ fun CategoriesScreen(
 
         is CategoriesUiState.Success -> {
             val categories = (state as CategoriesUiState.Success).categories
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)
-            ) {
-                items(categories) { category ->
-                    Text(
-                        text = category.name,
-                        modifier = Modifier
-                            .clickable { onCategoryClick(category) }
-                            .padding(8.dp)
-                    )
+            if (categories.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("No hay categorías disponibles")
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)
+                ) {
+                    items(categories) { category ->
+                        Text(
+                            text = category.name,
+                            modifier = Modifier
+                                .clickable { onCategoryClick(category) }
+                                .padding(8.dp)
+                        )
+                    }
                 }
             }
         }

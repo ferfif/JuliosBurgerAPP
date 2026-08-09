@@ -63,21 +63,32 @@ fun ModifierGroupsScreen(
 
             is ModifierGroupsUiState.Success -> {
                 val modifierGroups = (state as ModifierGroupsUiState.Success).modifierGroups
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(16.dp)
-                ) {
-                    items(modifierGroups) { group ->
-                        Text(
-                            text = group.name,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { onModifierGroupClick(group) }
-                                .padding(8.dp)
-                        )
+                if (modifierGroups.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("No hay grupos de modificadores disponibles")
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(modifierGroups) { group ->
+                            Text(
+                                text = group.name,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onModifierGroupClick(group) }
+                                    .padding(8.dp)
+                            )
+                        }
                     }
                 }
             }

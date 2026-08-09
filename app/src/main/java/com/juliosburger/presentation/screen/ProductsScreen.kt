@@ -63,21 +63,32 @@ fun ProductsScreen(
 
             is ProductsUiState.Success -> {
                 val products = (state as ProductsUiState.Success).products
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(16.dp)
-                ) {
-                    items(products) { product ->
-                        Text(
-                            text = product.name,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { onProductClick(product) }
-                                .padding(8.dp)
-                        )
+                if (products.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("No hay productos disponibles")
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(products) { product ->
+                            Text(
+                                text = product.name,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onProductClick(product) }
+                                    .padding(8.dp)
+                            )
+                        }
                     }
                 }
             }
