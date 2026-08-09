@@ -1,5 +1,6 @@
 package com.juliosburger.presentation.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +22,10 @@ import com.juliosburger.presentation.state.CategoriesUiState
 import com.juliosburger.presentation.viewmodel.CategoriesViewModel
 
 @Composable
-fun CategoriesScreen(viewModel: CategoriesViewModel = hiltViewModel()) {
+fun CategoriesScreen(
+    onCategoryClick: (Category) -> Unit,
+    viewModel: CategoriesViewModel = hiltViewModel()
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (state) {
@@ -39,7 +43,12 @@ fun CategoriesScreen(viewModel: CategoriesViewModel = hiltViewModel()) {
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp)
             ) {
                 items(categories) { category ->
-                    Text(text = category.name)
+                    Text(
+                        text = category.name,
+                        modifier = Modifier
+                            .clickable { onCategoryClick(category) }
+                            .padding(8.dp)
+                    )
                 }
             }
         }

@@ -5,7 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import com.juliosburger.presentation.screen.CategoriesScreen
+import androidx.navigation.compose.rememberNavController
+import com.juliosburger.presentation.navigation.NavGraph
 import com.juliosburger.ui.theme.JuliosBurgerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +16,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JuliosBurgerTheme {
-                CategoriesScreen()
+                val navController = rememberNavController()
+                NavGraph(navController = navController)
             }
         }
     }
