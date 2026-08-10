@@ -1,7 +1,14 @@
 package com.juliosburger.di
 
+import com.juliosburger.data.mapper.DraftOrderItemMapper
+import com.juliosburger.data.serialization.SnapshotSerializer
+import com.juliosburger.domain.repository.OrderRepository
 import com.juliosburger.domain.repository.ProductRepository
+import com.juliosburger.domain.usecase.AcceptDraftOrderUseCase
+import com.juliosburger.domain.usecase.ConfirmDraftOrderUseCase
+import com.juliosburger.domain.usecase.CreateDraftOrderUseCase
 import com.juliosburger.domain.usecase.GetCategoriesUseCase
+import com.juliosburger.domain.usecase.GetDraftOrdersUseCase
 import com.juliosburger.domain.usecase.GetModifierGroupsUseCase
 import com.juliosburger.domain.usecase.GetModifierOptionsUseCase
 import com.juliosburger.domain.usecase.GetProductsUseCase
@@ -45,5 +52,45 @@ object UseCaseModule {
         productRepository: ProductRepository
     ): GetModifierOptionsUseCase {
         return GetModifierOptionsUseCase(productRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreateDraftOrderUseCase(
+        orderRepository: OrderRepository
+    ): CreateDraftOrderUseCase {
+        return CreateDraftOrderUseCase(orderRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetDraftOrdersUseCase(
+        orderRepository: OrderRepository
+    ): GetDraftOrdersUseCase {
+        return GetDraftOrdersUseCase(orderRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideConfirmDraftOrderUseCase(
+        orderRepository: OrderRepository
+    ): ConfirmDraftOrderUseCase {
+        return ConfirmDraftOrderUseCase(orderRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAcceptDraftOrderUseCase(
+        orderRepository: OrderRepository
+    ): AcceptDraftOrderUseCase {
+        return AcceptDraftOrderUseCase(orderRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDraftOrderItemMapper(
+        snapshotSerializer: SnapshotSerializer
+    ): DraftOrderItemMapper {
+        return DraftOrderItemMapper(snapshotSerializer)
     }
 }

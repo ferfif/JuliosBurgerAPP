@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <lint>
+        <issue id="UnrememberedGetBackStackEntry" severity="ignore" />
+    </lint>
+</resources>

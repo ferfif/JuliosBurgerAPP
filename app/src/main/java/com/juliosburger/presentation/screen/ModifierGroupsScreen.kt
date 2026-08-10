@@ -81,14 +81,20 @@ fun ModifierGroupsScreen(
                         contentPadding = PaddingValues(16.dp)
                     ) {
                         items(modifierGroups) { group ->
-                            Text(
-                                text = group.name,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable { onModifierGroupClick(group) }
-                                    .padding(8.dp)
-                            )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onModifierGroupClick(group) }
+                                .padding(8.dp)
+                        ) {
+                            Text(text = group.name)
+                            Text(text = "Selección mínima: $${group.minSelection}")
+                            Text(text = "Selección máxima: $${group.maxSelection}")
+                            if (group.isRequired) {
+                                Text(text = "Obligatorio")
+                            }
                         }
+                    }
                     }
                 }
             }

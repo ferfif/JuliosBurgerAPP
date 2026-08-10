@@ -81,14 +81,22 @@ fun ProductsScreen(
                         contentPadding = PaddingValues(16.dp)
                     ) {
                         items(products) { product ->
-                            Text(
-                                text = product.name,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable { onProductClick(product) }
-                                    .padding(8.dp)
-                            )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onProductClick(product) }
+                                .padding(8.dp)
+                        ) {
+                            Text(text = product.name)
+                            Text(text = "$ $${product.basePrice}")
+                            product.description?.let { description ->
+                                Text(text = description)
+                            }
+                            if (!product.isAvailable) {
+                                Text(text = "No disponible")
+                            }
                         }
+                    }
                     }
                 }
             }
