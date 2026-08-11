@@ -5,6 +5,7 @@ import com.juliosburger.data.serialization.SnapshotSerializer
 import com.juliosburger.domain.repository.OrderRepository
 import com.juliosburger.domain.repository.ProductRepository
 import com.juliosburger.domain.usecase.AcceptDraftOrderUseCase
+import com.juliosburger.domain.usecase.StartCookingUseCase
 import com.juliosburger.domain.usecase.ConfirmDraftOrderUseCase
 import com.juliosburger.domain.usecase.CreateDraftOrderUseCase
 import com.juliosburger.domain.usecase.GetCategoriesUseCase
@@ -84,6 +85,14 @@ object UseCaseModule {
         orderRepository: OrderRepository
     ): AcceptDraftOrderUseCase {
         return AcceptDraftOrderUseCase(orderRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStartCookingUseCase(
+        orderRepository: OrderRepository
+    ): StartCookingUseCase {
+        return StartCookingUseCase(orderRepository)
     }
 
     @Provides

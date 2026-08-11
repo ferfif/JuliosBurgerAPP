@@ -136,6 +136,24 @@ fun OrderScreen(
                                         Text("Confirmar pedido")
                                     }
                                 }
+                                if (order.status == DraftOrderStatus.PENDING_CASHIER_REVIEW) {
+                                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
+                                    Button(
+                                        onClick = { viewModel.acceptOrder(order.id.toString()) },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text("Aceptar pedido")
+                                    }
+                                }
+                                if (order.status == DraftOrderStatus.CONFIRMED) {
+                                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
+                                    Button(
+                                        onClick = { viewModel.startCooking(order.id.toString()) },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text("Iniciar cocina")
+                                    }
+                                }
                             }
                         }
                     }

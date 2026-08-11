@@ -9,6 +9,7 @@ import com.juliosburger.domain.usecase.AcceptDraftOrderUseCase
 import com.juliosburger.domain.usecase.ConfirmDraftOrderUseCase
 import com.juliosburger.domain.usecase.CreateDraftOrderUseCase
 import com.juliosburger.domain.usecase.GetDraftOrdersUseCase
+import com.juliosburger.domain.usecase.StartCookingUseCase
 import com.juliosburger.presentation.state.OrderUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +24,8 @@ import javax.inject.Inject
         private val createDraftOrderUseCase: CreateDraftOrderUseCase,
         private val getDraftOrdersUseCase: GetDraftOrdersUseCase,
         private val confirmDraftOrderUseCase: ConfirmDraftOrderUseCase,
-        private val acceptDraftOrderUseCase: AcceptDraftOrderUseCase
+        private val acceptDraftOrderUseCase: AcceptDraftOrderUseCase,
+        private val startCookingUseCase: StartCookingUseCase
     ) : ViewModel() {
 
     private val _state = MutableStateFlow<OrderUiState>(OrderUiState.Loading)
@@ -78,6 +80,22 @@ import javax.inject.Inject
                 }
             } catch (e: Exception) {
                 _state.value = OrderUiState.Error(e.message ?: "Error al aceptar pedido")
+            }
+        }
+    }
+
+    fun startCooking(draftOrderId: String) {
+        viewModelScope.launch {
+            try {
+                startCookingUseCase(draftOrderId).collect { result ->
+                    result.onSuccess {
+                        loadOrdersByStatus(DraftOrderStatus.CONFIRMED)
+                    }.onFailure { error ->
+                        _state.value = OrderUiState.Error(error.message ?: "Error al iniciar cocina")
+                    }
+                }
+            } catch (e: Exception) {
+                _state.value = OrderUiState.Error(e.message ?: "Error al iniciar cocina")
             }
         }
     }

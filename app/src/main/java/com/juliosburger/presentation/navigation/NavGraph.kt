@@ -35,6 +35,9 @@ fun NavGraph(navController: NavHostController) {
                 },
                 onCashierQueueClick = {
                     navController.navigate("cashier_queue")
+                },
+                onKitchenQueueClick = {
+                    navController.navigate("kitchen_queue")
                 }
             )
         }
@@ -126,6 +129,20 @@ fun NavGraph(navController: NavHostController) {
                 },
                 selectionViewModel = selectionViewModel,
                 statusFilter = DraftOrderStatus.PENDING_CASHIER_REVIEW
+            )
+        }
+
+        composable(route = "kitchen_queue") {
+            val selectionViewModel: ProductSelectionViewModel = hiltViewModel(sharedEntry)
+            OrderScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onAddProduct = {
+                    navController.navigate("categories")
+                },
+                selectionViewModel = selectionViewModel,
+                statusFilter = DraftOrderStatus.CONFIRMED
             )
         }
     }
