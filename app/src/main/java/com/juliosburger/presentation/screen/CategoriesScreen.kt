@@ -34,6 +34,7 @@ fun CategoriesScreen(
     onOrdersClick: () -> Unit,
     onCashierQueueClick: () -> Unit = {},
     onKitchenQueueClick: () -> Unit = {},
+    onCookingQueueClick: () -> Unit = {},
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -114,6 +115,15 @@ fun CategoriesScreen(
                 .padding(start = 16.dp, bottom = 72.dp)
         ) {
             Text("Cola de Cocina")
+        }
+
+        TextButton(
+            onClick = onCookingQueueClick,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(start = 16.dp, bottom = 128.dp)
+        ) {
+            Text("Órdenes en Cocina")
         }
     }
 }

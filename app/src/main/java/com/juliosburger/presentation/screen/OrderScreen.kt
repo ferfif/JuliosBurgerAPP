@@ -145,13 +145,22 @@ fun OrderScreen(
                                         Text("Aceptar pedido")
                                     }
                                 }
-                                if (order.status == DraftOrderStatus.CONFIRMED) {
+                                 if (order.status == DraftOrderStatus.CONFIRMED) {
                                     Spacer(modifier = Modifier.padding(vertical = 4.dp))
                                     Button(
                                         onClick = { viewModel.startCooking(order.id.toString()) },
                                         modifier = Modifier.fillMaxWidth()
                                     ) {
                                         Text("Iniciar cocina")
+                                    }
+                                }
+                                if (order.status == DraftOrderStatus.COOKING) {
+                                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
+                                    Button(
+                                        onClick = { viewModel.markAsReady(order.id.toString()) },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text("Marcar como listo")
                                     }
                                 }
                             }
