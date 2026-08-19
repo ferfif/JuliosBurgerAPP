@@ -77,11 +77,15 @@ fun OrderScreen(
             is OrderUiState.Success -> {
                 val orders = (orderState as OrderUiState.Success).orders
                 if (orders.isEmpty() && draftOrderItem == null) {
-                    val emptyMessage = if (isOrderCreationMode) {
-                        "No hay pedidos en borrador"
-                    } else {
-                        "No hay pedidos pendientes de revisión"
-                    }
+                val emptyMessage = when (statusFilter) {
+                    DraftOrderStatus.DRAFT -> "No hay pedidos en borrador"
+                    DraftOrderStatus.PENDING_CASHIER_REVIEW -> "No hay pedidos pendientes de revisión"
+                    DraftOrderStatus.CONFIRMED -> "No hay pedidos pendientes de cocina"
+                    DraftOrderStatus.COOKING -> "No hay pedidos en cocina"
+                    DraftOrderStatus.READY -> "No hay pedidos listos para entregar"
+                    DraftOrderStatus.DELIVERED -> "No hay pedidos entregados"
+                    DraftOrderStatus.CANCELLED -> "No hay pedidos cancelados"
+                }
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
@@ -161,6 +165,28 @@ fun OrderScreen(
                                         modifier = Modifier.fillMaxWidth()
                                     ) {
                                         Text("Marcar como listo")
+                                    }
+                                }
+                                if (order.status == DraftOrderStatus.READY) {
+                                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
+                                    Button(
+                                        onClick = { viewModel.deliverOrder(order.id.toString()) },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text("Marcar como entregado")
+                                    }
+                                }
+                                if (order.status == DraftOrderStatus.DRAFT ||
+                                    order.status == DraftOrderStatus.PENDING_CASHIER_REVIEW ||
+                                    order.status == DraftOrderStatus.CONFIRMED ||
+                                    order.status == DraftOrderStatus.COOKING ||
+                                    order.status == DraftOrderStatus.READY) {
+                                    Spacer(modifier = Modifier.padding(vertical = 4.dp))
+                                    Button(
+                                        onClick = { viewModel.cancelOrder(order.id.toString(), order.status) },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text("Cancelar pedido")
                                     }
                                 }
                             }

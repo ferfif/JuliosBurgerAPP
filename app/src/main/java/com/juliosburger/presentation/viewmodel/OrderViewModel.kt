@@ -11,6 +11,8 @@ import com.juliosburger.domain.usecase.CreateDraftOrderUseCase
 import com.juliosburger.domain.usecase.GetDraftOrdersUseCase
 import com.juliosburger.domain.usecase.StartCookingUseCase
 import com.juliosburger.domain.usecase.CompleteOrderUseCase
+import com.juliosburger.domain.usecase.DeliverOrderUseCase
+import com.juliosburger.domain.usecase.CancelOrderUseCase
 import com.juliosburger.presentation.state.OrderUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +29,9 @@ import javax.inject.Inject
         private val confirmDraftOrderUseCase: ConfirmDraftOrderUseCase,
         private val acceptDraftOrderUseCase: AcceptDraftOrderUseCase,
         private val startCookingUseCase: StartCookingUseCase,
-        private val completeOrderUseCase: CompleteOrderUseCase
+        private val completeOrderUseCase: CompleteOrderUseCase,
+        private val deliverOrderUseCase: DeliverOrderUseCase,
+        private val cancelOrderUseCase: CancelOrderUseCase
     ) : ViewModel() {
 
     private val _state = MutableStateFlow<OrderUiState>(OrderUiState.Loading)
@@ -114,6 +118,38 @@ import javax.inject.Inject
                 }
             } catch (e: Exception) {
                 _state.value = OrderUiState.Error(e.message ?: "Error al marcar como listo")
+            }
+        }
+    }
+
+    fun deliverOrder(draftOrderId: String) {
+        viewModelScope.launch {
+            try {
+                deliverOrderUseCase(draftOrderId).collect { result ->
+                    result.onSuccess {
+                        loadOrdersByStatus(DraftOrderStatus.READY)
+                    }.onFailure { error ->
+                        _state.value = OrderUiState.Error(error.message ?: "Error al marcar pedido como entregado")
+                    }
+                }
+            } catch (e: Exception) {
+                _state.value = OrderUiState.Error(e.message ?: "Error al marcar pedido como entregado")
+            }
+        }
+    }
+
+    fun cancelOrder(draftOrderId: String, fromStatus: DraftOrderStatus) {
+        viewModelScope.launch {
+            try {
+                cancelOrderUseCase(draftOrderId).collect { result ->
+                    result.onSuccess {
+                        loadOrdersByStatus(fromStatus)
+                    }.onFailure { error ->
+                        _state.value = OrderUiState.Error(error.message ?: "Error al cancelar pedido")
+                    }
+                }
+            } catch (e: Exception) {
+                _state.value = OrderUiState.Error(e.message ?: "Error al cancelar pedido")
             }
         }
     }

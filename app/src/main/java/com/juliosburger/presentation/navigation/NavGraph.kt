@@ -41,6 +41,15 @@ fun NavGraph(navController: NavHostController) {
                 },
                 onCookingQueueClick = {
                     navController.navigate("cooking_queue")
+                },
+                onDeliveryQueueClick = {
+                    navController.navigate("ready_queue")
+                },
+                onCancellationQueueClick = {
+                    navController.navigate("canceled_queue")
+                },
+                onDeliveredQueueClick = {
+                    navController.navigate("delivered_queue")
                 }
             )
         }
@@ -160,6 +169,48 @@ fun NavGraph(navController: NavHostController) {
                 },
                 selectionViewModel = selectionViewModel,
                 statusFilter = DraftOrderStatus.COOKING
+            )
+        }
+
+        composable(route = "ready_queue") {
+            val selectionViewModel: ProductSelectionViewModel = hiltViewModel(sharedEntry)
+            OrderScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onAddProduct = {
+                    navController.navigate("categories")
+                },
+                selectionViewModel = selectionViewModel,
+                statusFilter = DraftOrderStatus.READY
+            )
+        }
+
+        composable(route = "canceled_queue") {
+            val selectionViewModel: ProductSelectionViewModel = hiltViewModel(sharedEntry)
+            OrderScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onAddProduct = {
+                    navController.navigate("categories")
+                },
+                selectionViewModel = selectionViewModel,
+                statusFilter = DraftOrderStatus.CANCELLED
+            )
+        }
+
+        composable(route = "delivered_queue") {
+            val selectionViewModel: ProductSelectionViewModel = hiltViewModel(sharedEntry)
+            OrderScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onAddProduct = {
+                    navController.navigate("categories")
+                },
+                selectionViewModel = selectionViewModel,
+                statusFilter = DraftOrderStatus.DELIVERED
             )
         }
     }
